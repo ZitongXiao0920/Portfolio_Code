@@ -1,0 +1,325 @@
+[gd_scene load_steps=32 format=3 uid="uid://d46wrkgdeynk"]
+
+[ext_resource type="Script" path="res://scripts/initialize-webxr.gd" id="1_wh60i"]
+[ext_resource type="PackedScene" uid="uid://bq86r4yll8po" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_fullglove_low.tscn" id="2_gciqe"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="3_u4x0j"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="4_rhvv5"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="5_t12ir"]
+[ext_resource type="PackedScene" uid="uid://c2q5phg8w08o" path="res://addons/godot-xr-tools/functions/movement_jump.tscn" id="6_0i0c7"]
+[ext_resource type="PackedScene" uid="uid://xqimcf20s2jp" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_fullglove_low.tscn" id="6_5raag"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="7_sptwq"]
+[ext_resource type="PackedScene" uid="uid://l0i3ik5i0eml" path="res://addons/flag/models/SM_Bld_Castle_Flag_01.fbx" id="9_m2rkr"]
+[ext_resource type="PackedScene" uid="uid://dvhtrvn85cmif" path="res://addons/flag/models/SM_Bld_Castle_Flagpole_01.fbx" id="10_fpukb"]
+[ext_resource type="PackedScene" uid="uid://6tmdqrwvwg1x" path="res://Objects/cube.tscn" id="10_mq3gh"]
+[ext_resource type="PackedScene" uid="uid://bbs7yaa1r020q" path="res://cube_green.tscn" id="12_tdcy1"]
+[ext_resource type="PackedScene" uid="uid://d3jso2b7iqait" path="res://Objects/cube_blue.tscn" id="13_g1n8v"]
+[ext_resource type="PackedScene" uid="uid://bu12huv2jm00l" path="res://cube_yellow.tscn" id="14_gjnkd"]
+[ext_resource type="PackedScene" uid="uid://clww17g8d7icw" path="res://cube_purple.tscn" id="15_dpe3j"]
+[ext_resource type="PackedScene" uid="uid://muuugrtw2bfm" path="res://cube_black.tscn" id="16_yyqe4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fjijl"]
+size = Vector3(0.5, 1.5, 0.5)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_osj4q"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_noqmy"]
+sky_material = SubResource("ProceduralSkyMaterial_osj4q")
+
+[sub_resource type="Environment" id="Environment_pi0m0"]
+background_mode = 2
+sky = SubResource("Sky_noqmy")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a8whk"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ym5vi"]
+albedo_color = Color(0.47451, 0.341176, 0.27451, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_trsr2"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ctux"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mtxul"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nrac6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2sl4"]
+albedo_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gun5j"]
+albedo_color = Color(1, 1, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umbw0"]
+albedo_color = Color(0, 0.00784314, 1, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_htxf2"]
+albedo_color = Color(0, 1, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rod52"]
+albedo_color = Color(1, 0, 0, 0)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_wh60i")
+
+[node name="XRUser" type="RigidBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRUser"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_fjijl")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="XRUser"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XRUser/XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="LeftController" type="XRController3D" parent="XRUser/XROrigin3D"]
+unique_name_in_owner = true
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="XRUser/XROrigin3D/LeftController" instance=ExtResource("2_gciqe")]
+
+[node name="MovementDirect" parent="XRUser/XROrigin3D/LeftController" instance=ExtResource("3_u4x0j")]
+input_action = "primary"
+
+[node name="MovementTurn" parent="XRUser/XROrigin3D/LeftController" instance=ExtResource("4_rhvv5")]
+
+[node name="FunctionPickup" parent="XRUser/XROrigin3D/LeftController" instance=ExtResource("5_t12ir")]
+
+[node name="MovementJump" parent="XRUser/XROrigin3D/LeftController" instance=ExtResource("6_0i0c7")]
+
+[node name="RightController" type="XRController3D" parent="XRUser/XROrigin3D"]
+unique_name_in_owner = true
+tracker = &"right_hand"
+
+[node name="RightHand" parent="XRUser/XROrigin3D/RightController" instance=ExtResource("6_5raag")]
+
+[node name="MovementDirect" parent="XRUser/XROrigin3D/RightController" instance=ExtResource("3_u4x0j")]
+input_action = "primary"
+
+[node name="MovementTurn" parent="XRUser/XROrigin3D/RightController" instance=ExtResource("4_rhvv5")]
+
+[node name="FunctionPickup" parent="XRUser/XROrigin3D/RightController" instance=ExtResource("5_t12ir")]
+
+[node name="MovementJump" parent="XRUser/XROrigin3D/RightController" instance=ExtResource("6_0i0c7")]
+
+[node name="PlayerBody" parent="XRUser/XROrigin3D" instance=ExtResource("7_sptwq")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -75.0
+offset_right = 150.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Enter VR"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pi0m0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("PlaneMesh_a8whk")
+surface_material_override/0 = SubResource("StandardMaterial3D_ym5vi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, -49.9428, 0)
+shape = SubResource("BoxShape3D_trsr2")
+
+[node name="Object sculpture" type="Node3D" parent="."]
+
+[node name="Pedestal_purple" type="StaticBody3D" parent="Object sculpture"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.694765, 7.36396, 13.3443)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object sculpture/Pedestal_purple"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.0234199, 0, 0)
+mesh = SubResource("BoxMesh_8ctux")
+surface_material_override/0 = SubResource("StandardMaterial3D_mtxul")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object sculpture/Pedestal_purple"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal_black" type="StaticBody3D" parent="Object sculpture"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49591, 12.4873, 13.569)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object sculpture/Pedestal_black"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, -0.00351715)
+mesh = SubResource("BoxMesh_8ctux")
+surface_material_override/0 = SubResource("StandardMaterial3D_k2sl4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object sculpture/Pedestal_black"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal_yellow" type="StaticBody3D" parent="Object sculpture"]
+transform = Transform3D(1, 0, 0, 0, 0.999615, -0.0277472, 0, 0.0277472, 0.999615, -4.33561, 7.32362, 13.434)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object sculpture/Pedestal_yellow"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("BoxMesh_8ctux")
+surface_material_override/0 = SubResource("StandardMaterial3D_gun5j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object sculpture/Pedestal_yellow"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal_blue" type="StaticBody3D" parent="Object sculpture"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.54517, 2.49265, 13.3691)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object sculpture/Pedestal_blue"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.774351, 0, 0)
+material_override = SubResource("StandardMaterial3D_umbw0")
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object sculpture/Pedestal_blue"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.769918, 0, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal_green" type="StaticBody3D" parent="Object sculpture"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.75543, 2.44724, 13.3625)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object sculpture/Pedestal_green"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("BoxMesh_8ctux")
+surface_material_override/0 = SubResource("StandardMaterial3D_htxf2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object sculpture/Pedestal_green"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, -0.00755119)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal_red" type="StaticBody3D" parent="Object sculpture"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70644, 2.4602, 13.3903)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object sculpture/Pedestal_red"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("BoxMesh_8ctux")
+surface_material_override/0 = SubResource("StandardMaterial3D_rod52")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object sculpture/Pedestal_red"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="stairs" type="Node3D" parent="."]
+transform = Transform3D(0.0215008, 0, 0.999769, 0, 1, 0, -0.999769, 0, 0.0215008, 2.16609, 0, -7.38766)
+
+[node name="Pedestal" type="StaticBody3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0423179, 0.342404, -2.26822)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="stairs/Pedestal"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, -0.201078, 0)
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs/Pedestal"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, -0.197939, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal2" type="StaticBody3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0281386, 0.493443, -4.26053)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="stairs/Pedestal2"]
+transform = Transform3D(2, 0, 0, 0, 0.6, 0, 0, 0, 2, 0, -0.201078, 0)
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs/Pedestal2"]
+transform = Transform3D(2, 0, 0, 0, 0.6, 0, 0, 0, 2, 0, -0.197939, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal3" type="StaticBody3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.97331, 0.66189, -4.26053)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="stairs/Pedestal3"]
+transform = Transform3D(2, 0, 0, 0, 0.9, 0, 0, 0, 2, 0, -0.201078, 0)
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs/Pedestal3"]
+transform = Transform3D(2, 0, 0, 0, 0.9, 0, 0, 0, 2, 0, -0.187596, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal4" type="StaticBody3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9795, 0.796756, -4.26053)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="stairs/Pedestal4"]
+transform = Transform3D(2, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, -0.201078, 0)
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs/Pedestal4"]
+transform = Transform3D(2, 0, 0, 0, 1.2, 0, 0, 0, 2, 0, -0.197939, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal5" type="StaticBody3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.96178, 0.982279, -2.2548)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="stairs/Pedestal5"]
+transform = Transform3D(2, 0, 0, 0, 1.5, 0, 0, 0, 2, 0, -0.229306, 0)
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs/Pedestal5"]
+transform = Transform3D(2, 0, 0, 0, 1.5, 0, 0, 0, 2, 0, -0.24107, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal6" type="StaticBody3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.97128, 1.08604, -2.27738)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="stairs/Pedestal6"]
+transform = Transform3D(2, 0, 0, 0, 1.8, 0, 0, 0, 2, 0, -0.201078, 0)
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs/Pedestal6"]
+transform = Transform3D(2, 0, 0, 0, 1.8, 0, 0, 0, 2, 0, -0.19794, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="Pedestal7" type="StaticBody3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98358, 1.16575, -0.290402)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="stairs/Pedestal7"]
+transform = Transform3D(2, 0, 0, 0, 2.1, 0, 0, 0, 2, 0, -0.201078, 0)
+mesh = SubResource("BoxMesh_8ctux")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stairs/Pedestal7"]
+transform = Transform3D(2, 0, 0, 0, 2.1, 0, 0, 0, 2, 0, -0.197939, 0)
+shape = SubResource("BoxShape3D_nrac6")
+
+[node name="SM_Bld_Castle_Flag_01" parent="stairs" instance=ExtResource("9_m2rkr")]
+transform = Transform3D(0.120137, 0, -0.992757, 0, 1, 0, 0.992757, 0, 0.120137, 2.8422, 4.39128, 0.564231)
+
+[node name="SM_Bld_Castle_Flagpole_01" parent="stairs" instance=ExtResource("10_fpukb")]
+transform = Transform3D(1, 0, 4.47035e-08, 0, 1, 0, -4.47035e-08, 0, 1, 2.82831, 2.05116, 0.577832)
+
+[node name="Legos" type="Node3D" parent="."]
+
+[node name="cube_red" parent="Legos" instance=ExtResource("10_mq3gh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70737, 1.27257, -7.78144)
+
+[node name="cube_green" parent="Legos" instance=ExtResource("12_tdcy1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29811, 2.26811, -9.33665)
+
+[node name="cube_blue" parent="Legos" instance=ExtResource("13_g1n8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -12)
+
+[node name="cube_yellow" parent="Legos" instance=ExtResource("14_gjnkd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+
+[node name="cube_purple" parent="Legos" instance=ExtResource("15_dpe3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -10)
+
+[node name="cube_black" parent="Legos" instance=ExtResource("16_yyqe4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -12)

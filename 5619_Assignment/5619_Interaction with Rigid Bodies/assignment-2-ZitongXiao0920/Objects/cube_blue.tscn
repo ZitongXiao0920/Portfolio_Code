@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3jso2b7iqait"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_odad5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fdyom"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vofx3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpgoa"]
+albedo_color = Color(0, 0, 1, 0)
+
+[node name="cube_blue" instance=ExtResource("1_odad5")]
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_fdyom")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_vofx3")
+surface_material_override/0 = SubResource("StandardMaterial3D_rpgoa")
